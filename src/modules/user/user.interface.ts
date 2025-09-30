@@ -10,7 +10,7 @@ export interface IUser extends Document {
   address?: string;
   role: UserRole;
   isOnline: boolean;
-   otp: {
+   otp?: {
     code: string;
     expiresAt: Date;
     verified: boolean;

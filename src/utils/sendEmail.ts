@@ -2,16 +2,8 @@
 import nodemailer from 'nodemailer';
 import AppError from "../errorHelpers/AppError";
 import { envVars } from "../config/envVars";
+import { StatusCodes } from 'http-status-codes';
 
-const transporter = nodemailer.createTransport({
-  secure: true,
-  auth: {
-    user: envVars.SMTP_USER,
-    pass: envVars.SMTP_PASS,
-  },
-  port: Number(envVars.SMTP_PORT),
-  host: envVars.SMTP_HOST,
-});
 
 interface SendEmailOptions {
   to: string;
@@ -23,6 +15,17 @@ interface SendEmailOptions {
     contentType: string;
   }[];
 }
+
+
+const transporter = nodemailer.createTransport({
+  secure: true,
+  auth: {
+    user: envVars.SMTP_USER,
+    pass: envVars.SMTP_PASS,
+  },
+  port: Number(envVars.SMTP_PORT),
+  host: envVars.SMTP_HOST,
+});
 
 export const sendEmail = async (email: string, otp: string, {
     to, subject, htmlBody, attachments,
@@ -46,6 +49,6 @@ export const sendEmail = async (email: string, otp: string, {
   console.error("Nodemailer Response:", error?.response);
   
 
-    throw new AppError(401, "Email error");
+    throw new AppError(StatusCodes.UNAUTHORIZED, "Email error");
   }
 };

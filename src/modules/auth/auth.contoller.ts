@@ -20,6 +20,76 @@ const credentialsLogin = async (req: Request, res: Response, next: NextFunction)
     }
 };
 
+
+const logout = async (req: Request, res: Response) => {
+  res.clearCookie("accessToken", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "Production",
+    sameSite: "strict",
+  });
+
+  res.clearCookie("refreshToken", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "Production",
+    sameSite: "strict",
+  });
+
+  res.status(200).json({
+    success: true,
+    message: "Logged out successfully",
+  });
+};
+const PasswordResetController = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { email } = req.body;
+      const result = await AuthServices.sendPasswordResetOTP(email);
+      sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: result.message,
+        data: null,
+      });
+    } catch (err) {
+      next(err);
+    }
+  }
+
+const verifyResetOTP= async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { email, otp } = req.body;
+      const result = await AuthServices.verifyResetOTP(email, otp);
+      sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: result.message,
+        data: null,
+      });
+    } catch (err) {
+      next(err);
+    }
+  }
+  
+
+const resetPassword= async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { email, newPassword, confirmPassword } = req.body;
+      const result = await AuthServices.resetPasswordWithOTP(email, newPassword, confirmPassword);
+      sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: result.message,
+        data: null,
+      });
+    } catch (err) {
+      next(err);
+    }
+  }
+ 
 export const AuthController = {
-    credentialsLogin
+    credentialsLogin,
+    logout,
+    PasswordResetController,
+      verifyResetOTP, 
+    resetPassword,
+    
 };
