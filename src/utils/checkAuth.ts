@@ -35,7 +35,6 @@ export const checkAuth =
         next()
 
     } catch (error) {
-        console.log("jwt error", error);
         next(error)
     }
   };

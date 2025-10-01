@@ -46,9 +46,6 @@ export const sendEmail = async (email: string, otp: string, {
     console.log(`✉️ Email sent to ${to}: ${info.messageId}`);
   } catch (error: any) {
   console.error("Full Error:", error);
-  console.error("Nodemailer Response:", error?.response);
-  
-
     throw new AppError(StatusCodes.UNAUTHORIZED, "Email error");
   }
 };
