@@ -5,6 +5,7 @@ import { StatusCodes } from "http-status-codes";
 
 
 
+
 const credentialsLogin = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const loginInfo = await AuthServices.credentialsLogin(req.body);
@@ -19,6 +20,7 @@ const credentialsLogin = async (req: Request, res: Response, next: NextFunction)
         next(error);
     }
 };
+
 
 
 const logout = async (req: Request, res: Response) => {
@@ -91,5 +93,6 @@ export const AuthController = {
     PasswordResetController,
       verifyResetOTP, 
     resetPassword,
+
     
 };

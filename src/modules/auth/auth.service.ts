@@ -53,6 +53,8 @@ const credentialsLogin = async (payload: Partial<IUser>) => {
   };
 };
 
+
+
 const sendPasswordResetOTP = async (email: string) => {
   const user = await User.findOne({ email });
   if (!user) throw new AppError(404, "User not found");

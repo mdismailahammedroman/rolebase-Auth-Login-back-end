@@ -1,5 +1,9 @@
-export type UserRole = 'customer' | 'serviceProvider' | 'admin';
+export type UserRole = 'customer' | 'serviceProvider';
 
+export enum Role {
+  USER = "customer",
+  SERVICEPROVIDER = "serviceProvider",
+}
 
 export interface IUser extends Document {
   name: string;
